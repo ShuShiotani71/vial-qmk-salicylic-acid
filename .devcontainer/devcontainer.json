@@ -1,0 +1,28 @@
+{
+  "name": "goforty",
+
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "workspaceFolder": "/root/qmk",
+
+  // necessary for accessing host usb ports
+  "privileged": true,
+
+  "mounts": [
+    // mount project repo
+    "source=${localWorkspaceFolder}/keyboards/salicylic_acid3/goforty_ortho,target=/root/qmk/keyboards/salicylic_acid3/goforty_ortho,type=bind",
+    // necessary for accessing host usb ports
+    "source=/dev,target=/dev,type=bind"
+  ],
+
+  "containerEnv": {
+    "KEYBOARD_PATH": "salicylic_acid3/goforty_ortho",
+    "KEYMAP": "shiotani"
+  },
+
+  // executed inside $workspaceFolder
+  "postCreateCommand": "make SKIP_GIT=yes ${KEYBOARD_PATH}:${KEYMAP}"
+}
+
