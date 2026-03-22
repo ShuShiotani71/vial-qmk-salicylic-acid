@@ -233,13 +233,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #define SCR_UP KC_MS_WH_UP
 #define SCR_RGHT KC_MS_WH_RIGHT
 
+#define CTL_SFT LCTL(KC_LSFT)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
         KC_Q         , KC_W         , KC_E         , KC_R         , KC_T         , _______      , _______      , _______      , KC_Y         , KC_U         , KC_I         , KC_O         , KC_P         ,
         KC_A         , S_LT4        , D_LGUI       , F_LALT       , KC_G         , _______      , _______      , _______      , KC_H         , J_RALT       , K_RGUI       , L_LT3        , KC_BSPC      ,
-        KC_Z         , KC_X         , KC_C         , KC_V         , KC_B         , _______      , _______      , _______      , KC_N         , KC_M         , KC_COMM      , KC_DOT       , KC_LGUI      ,
+        KC_Z         , KC_X         , KC_C         , KC_V         , KC_B         , _______      , _______      , _______      , KC_N         , KC_M         , KC_COMM      , KC_DOT       , CTL_SFT      ,
         _______      , _______      , _______      , _______      , MO(1)        , ENT_L2                      , SPC_RCTL     , KC_RSFT      , _______      , _______      , _______      , _______
     ),
 
