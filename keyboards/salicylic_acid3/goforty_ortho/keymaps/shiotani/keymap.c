@@ -19,9 +19,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "os_detection.h"
 
 const key_override_t bspc_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_ESC);
+const key_override_t zero_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_0, KC_0);
+const key_override_t one_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_1, KC_1);
+const key_override_t two_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_2, KC_2);
+const key_override_t three_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_3, KC_3);
+const key_override_t four_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_4, KC_4);
+const key_override_t five_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_5, KC_5);
+const key_override_t six_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_6, KC_6);
+const key_override_t seven_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_7, KC_7);
+const key_override_t eight_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_8, KC_8);
+const key_override_t nine_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_9, KC_9);
 // for some reason had to use an array instead of pointers for this one
 const key_override_t *key_overrides[] = {
-    &bspc_key_override
+    &bspc_key_override,
+    &zero_key_override,
+    &one_key_override,
+    &two_key_override,
+    &three_key_override,
+    &four_key_override,
+    &five_key_override,
+    &six_key_override,
+    &seven_key_override,
+    &eight_key_override,
+    &nine_key_override,
 };
 
 bool is_alt_tab_active = false;
@@ -212,10 +232,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     return true;
 };
 
+#define G_LALT MT(MOD_LALT, KC_G)
+#define H_RALT MT(MOD_RALT, KC_H)
 #define D_LGUI MT(MOD_LGUI, KC_D)
-#define F_LALT MT(MOD_LALT, KC_F)
 #define K_RGUI MT(MOD_RGUI, KC_K)
-#define J_RALT MT(MOD_RALT, KC_J)
+#define F_LCS MT(MOD_LCTL | MOD_LSFT, KC_F)
+#define J_RCS MT(MOD_RCTL | MOD_RSFT, KC_J)
 #define L_LT3 LT(3, KC_L)
 #define S_LT4 LT(4, KC_S)
 
@@ -239,8 +261,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
         KC_Q         , KC_W         , KC_E         , KC_R         , KC_T         , _______      , _______      , _______      , KC_Y         , KC_U         , KC_I         , KC_O         , KC_P         ,
-        KC_A         , S_LT4        , D_LGUI       , F_LALT       , KC_G         , _______      , _______      , _______      , KC_H         , J_RALT       , K_RGUI       , L_LT3        , KC_BSPC      ,
-        KC_Z         , KC_X         , KC_C         , KC_V         , KC_B         , _______      , _______      , _______      , KC_N         , KC_M         , KC_COMM      , KC_DOT       , CTL_SFT      ,
+        KC_A         , S_LT4        , D_LGUI       , F_LCS        , G_LALT       , _______      , _______      , _______      , H_RALT       , J_RCS        , K_RGUI       , L_LT3        , KC_BSPC      ,
+        KC_Z         , KC_X         , KC_C         , KC_V         , KC_B         , _______      , _______      , _______      , KC_N         , KC_M         , KC_COMM      , KC_DOT       , KC_LGUI      ,
         _______      , _______      , _______      , _______      , MO(1)        , ENT_L2                      , SPC_RCTL     , KC_RSFT      , _______      , _______      , _______      , _______
     ),
 
@@ -252,9 +274,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [2] = LAYOUT(
-        ALT_SFT_TAB  , CTL_SFT_TAB  , CTL_TAB      , ALT_TAB      , _______      , _______      , _______      , _______      , _______      , _______      , KC_HOME      , KC_END       , _______      ,
+        KC_9         , KC_8         , KC_7         , KC_6         , KC_5         , _______      , _______      , _______      , ALT_SFT_TAB  , ALT_TAB      , CTL_SFT_TAB  , CTL_TAB      , _______      ,
         KC_0         , KC_1         , KC_2         , KC_3         , KC_4         , _______      , _______      , _______      , KC_LEFT      , KC_DOWN      , KC_UP        , KC_RIGHT     , KC_BSPC      ,
-        KC_5         , KC_6         , KC_7         , KC_8         , KC_9         , _______      , _______      , _______      , SCR_LEFT     , SCR_DOWN     , SCR_UP       , SCR_RGHT     , _______      ,
+        _______      , _______      , _______      , _______      , _______      , _______      , _______      , _______      , SCR_LEFT     , SCR_DOWN     , SCR_UP       , SCR_RGHT     , _______      ,
         _______      , _______      , _______      , _______      , MO(1)        , ENT_L2                      , SPC_RCTL     , KC_RSFT      , _______      , _______      , _______      , _______
     ),
 
@@ -280,34 +302,34 @@ enum combos
 {
     BTN1,
     BTN2,
+    CHANGE_LANG,
+    EN,
+    JP,
     BTN4,
     BTN5,
     TAB,
-    EN,
-    JP,
     DEL,
-    PRNTSCRN,
 };
 const uint16_t PROGMEM btn1[] = {K_RGUI, L_LT3, COMBO_END};
 const uint16_t PROGMEM btn2[] = {KC_COMM, KC_DOT, COMBO_END};
-const uint16_t PROGMEM btn4[] = {J_RALT, K_RGUI, COMBO_END};
-const uint16_t PROGMEM btn5[] = {KC_M, KC_COMM, COMBO_END};
-const uint16_t PROGMEM tab[] = {KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM en[] = {S_LT4, D_LGUI, COMBO_END};
-const uint16_t PROGMEM jp[] = {D_LGUI, F_LALT, COMBO_END};
-const uint16_t PROGMEM del[] = {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM prntscrn[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM change_lang[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM en[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM jp[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM btn4[] = {S_LT4, D_LGUI, COMBO_END};
+const uint16_t PROGMEM btn5[] = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM tab[] = {J_RCS, K_RGUI, COMBO_END};
+const uint16_t PROGMEM del[] = {D_LGUI, F_LCS, COMBO_END};
 
 combo_t key_combos[] = {
     [BTN1] = COMBO(btn1, KC_BTN1),
     [BTN2] = COMBO(btn2, KC_BTN2),
+    [CHANGE_LANG] = COMBO(change_lang, CH_LANG),
+    [EN] = COMBO(en, TOGGLE_EN),
+    [JP] = COMBO(jp, TOGGLE_JP),
     [BTN4] = COMBO(btn4, KC_BTN4),
     [BTN5] = COMBO(btn5, KC_BTN5),
     [TAB] = COMBO(tab, KC_TAB),
-    [EN] = COMBO(en, TOGGLE_EN),
-    [JP] = COMBO(jp, TOGGLE_JP),
     [DEL] = COMBO(del, KC_DEL),
-    [PRNTSCRN] = COMBO(prntscrn, KC_PSCR),
 };
 
 // per key tapping term
